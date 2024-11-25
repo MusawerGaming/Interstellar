@@ -9,7 +9,7 @@ import express from "express";
 import basicAuth from "express-basic-auth";
 import mime from "mime";
 import fetch from "node-fetch";
-// import { setupMasqr } from "./Masqr.js";
+import { Analytics } from '@vercel/analytics'; // Importing Vercel Analytics
 import config from "./config.js";
 
 console.log(chalk.yellow("🚀 Starting server..."));
@@ -32,6 +32,9 @@ if (config.challenge !== false) {
   });
   app.use(basicAuth({ users: config.users, challenge: true }));
 }
+
+// Adding Vercel Analytics middleware
+app.use(Analytics());
 
 app.get("/e/*", async (req, res, next) => {
   try {
